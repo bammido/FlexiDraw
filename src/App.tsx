@@ -1,34 +1,26 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useRef } from 'react';
+import Board from './components/board';
+import BoardOptions from './components/boardOptions';
+import { BoardContextProvider } from './context/BoardContext';
+import { ElementsConfigsContext } from './context/ElementsConfigsContext';
 
 function App() {
-  const [count, setCount] = useState(0)
+  const boardRef = useRef<HTMLDivElement | null>(null)
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <div style={{width: "100vw", height: "100vh", display: "flex"}}>
+      <BoardContextProvider>
+        <ElementsConfigsContext>
+          <div style={{display: "flex", flexDirection: "column", padding: "3rem", flexGrow: 1}}>
+            <BoardOptions />
+            
+            <div ref={boardRef} style={{display: 'flex', flexGrow: 1 }}>
+                <Board boardRef={boardRef} />
+            </div>
+          </div>
+        </ElementsConfigsContext>
+      </BoardContextProvider>
+    </div>
   )
 }
 
