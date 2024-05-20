@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { MatrixType} from "./types";
+import { MatrixType} from "../square/types";
 
 export const ResinzingDiv = styled.div<MatrixType>`
     position: absolute;

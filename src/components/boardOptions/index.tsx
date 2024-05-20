@@ -1,10 +1,25 @@
-import { useBoardContext } from "../../context/BoardContext"
-import { v4 as uuidv4 } from 'uuid';
+import { IElProps, IElementOnboard, useBoardContext } from "../../context/BoardContext"
+import generateId from "../../helpers/generateId";
+import Square from "../square";
 
 export default function BoardOptions() {
-    const { setElementsOnBoard } = useBoardContext()
+    const { addElement } = useBoardContext()
+
+    function addSquare() {
+      const newSquare: IElementOnboard<IElProps> = {
+        id: generateId(),
+        x: 0,
+        y: 0,
+        width: 50,
+        height: 50,
+        backgroundColor: 'black',
+        borderColor: 'black',
+        El: Square
+      }
+      addElement(newSquare)
+    }
 
     return <div>
-    <button onClick={() => setElementsOnBoard(prev => [...prev, {id: uuidv4(), type: 'square'}])}>quadrado</button>
+    <button onClick={addSquare}>quadrado</button>
   </div>
 }
