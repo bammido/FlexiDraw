@@ -1,16 +1,16 @@
 import { animated } from "@react-spring/web";
 import { IElProps } from "../../context/BoardContext";
 
-export default function Square({ x, y, width, height, dragging, toggleResinzing, binds: { dragBind }}: IElProps) {
+export default function Square({ x, y, width, height, backgroundColor, dragging, handleClickElement, binds: { dragBind }}: IElProps) {
 
     return (
       <animated.div
-      onClick={() => toggleResinzing(true)}
+      onClick={handleClickElement}
       style={{
           touchAction: 'none',
           x,
           y,
-          backgroundColor: "black",
+          backgroundColor: backgroundColor,
           width: width,
           height: height,
           position: 'absolute',

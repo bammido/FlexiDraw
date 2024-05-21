@@ -1,13 +1,13 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
+
 import { useSpring, animated, SpringValue } from "@react-spring/web";
-import { IElProps, IElementOnboard } from "../../context/BoardContext"
+import { IElProps, IElementOnboard, useBoardContext } from "../../context/BoardContext"
 import { useRef, useState } from "react";
-// import { useDrag } from "@use-gesture/react";
 import { useElementsConfigsContext } from "../../context/ElementsConfigsContext";
 import useOutsideClick from "../../hooks/useOutsideClick";
 import { Resizer } from "./styles";
 import useDrag from "./hooks/useDrag";
 import useResize from "./hooks/useResize";
+import useHandleUpdateElement from "./hooks/useHandleUpdateElement";
 
 export interface IResizerConfigs {
     resizerWidth: number;
@@ -33,7 +33,7 @@ export default function BoardElement({
 
     const {x, y, width, height} = configs
 
-    const {resinzingScale} = useElementsConfigsContext()
+    const {resinzingScale, elementOptionsRef} = useElementsConfigsContext()
 
     const [resizerConfigsSpring, resizerApi] = useSpring(() => ({ 
         resizerX: x.get() - (width.get() * (resinzingScale - 1))/ 2 , 
@@ -47,15 +47,31 @@ export default function BoardElement({
     const containerRef = useRef<HTMLDivElement | null>(null)
     const resizerRef = useRef<HTMLDivElement | null>(null)
 
-    useOutsideClick<HTMLDivElement | null, undefined>({ref: containerRef, callback: () => setResizing(false)})
+    useHandleUpdateElement({elApi: api, resizerApi, resizerConfigsSpring, elConfigsSpring: configs, id})
+    
+    const bindResizeDrag = useResize({id, elApi: api, resizerApi, resizerConfigsSpring, resizerRef, resizing, elConfigsSpring: configs})
 
-    const bindResizeDrag = useResize({elApi: api, resizerApi, resizerConfigsSpring, resizerRef, resizing})
-
-    const bindDragSquare = useDrag({ elApi: api, 
+    const bindDragSquare = useDrag({ 
+        id,
+        elApi: api, 
         resizerApi, 
         elConfigsSpring: configs, 
         resizerConfigsSpring, 
         toogleDragging: (isDragging: boolean) => setDragging(isDragging)})
+
+    const { selectElement, unselectElement } = useBoardContext()
+
+    function handleOutsideClick() {
+        unselectElement(id)
+        setResizing(false)
+    }
+
+    useOutsideClick<HTMLDivElement | null, HTMLDivElement | null>({ref: containerRef, callback: handleOutsideClick, altRef: elementOptionsRef })
+
+    function handleClickElement() {
+        setResizing(true)
+        selectElement(id)
+    }
     
     return <>
     <animated.div ref={containerRef} {...bindResizeDrag()} >
@@ -79,7 +95,7 @@ export default function BoardElement({
                 binds={{ dragBind: bindDragSquare }} 
                 dragging={dragging} 
                 resizing={resizing}
-                toggleResinzing={(isResizing: boolean) => setResizing(isResizing)}
+                handleClickElement={handleClickElement}
             />
         </animated.div>
     </>

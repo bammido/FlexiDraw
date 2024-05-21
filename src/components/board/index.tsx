@@ -11,7 +11,7 @@ export default function Board({boardRef}: {boardRef: React.MutableRefObject<null
     boardRef.current && setSize({width: boardRef.current.clientWidth, height: boardRef.current.clientHeight})
   }, [boardRef])
 
-    return <BoardDiv>
-      {elementsOnBoard.map(el => <BoardElement {...el} />)}
+  return <BoardDiv>
+    {elementsOnBoard.map(el => <BoardElement {...el} />)}
   </BoardDiv>
 }

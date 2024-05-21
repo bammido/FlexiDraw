@@ -1,25 +1,14 @@
-import { IElProps, IElementOnboard, useBoardContext } from "../../context/BoardContext"
-import generateId from "../../helpers/generateId";
-import Square from "../square";
+import { useBoardContext } from "../../context/BoardContext";
+import AddShapes from "./addShapes";
+import { BoardOptionButton, BoardOptionsContainer } from "./styles";
+import { RiEraserLine } from "react-icons/ri";
 
 export default function BoardOptions() {
-    const { addElement } = useBoardContext()
 
-    function addSquare() {
-      const newSquare: IElementOnboard<IElProps> = {
-        id: generateId(),
-        x: 0,
-        y: 0,
-        width: 50,
-        height: 50,
-        backgroundColor: 'black',
-        borderColor: 'black',
-        El: Square
-      }
-      addElement(newSquare)
-    }
-
-    return <div>
-    <button onClick={addSquare}>quadrado</button>
-  </div>
+  const {resetBoard} = useBoardContext()
+   
+  return <BoardOptionsContainer>
+    <AddShapes />
+    <BoardOptionButton onClick={resetBoard}><RiEraserLine />reset</BoardOptionButton>
+  </BoardOptionsContainer>
 }
