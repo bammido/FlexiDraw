@@ -7,9 +7,9 @@ import useOutsideClick from "../../hooks/useOutsideClick"
 import { AddShapesContainer, AddShapesPopOver, BoardOptionButton } from "./styles"
 
 import { FaShapes } from "react-icons/fa6";
-import { IoTriangle } from "react-icons/io5";
+// import { IoTriangle } from "react-icons/io5";
 import { FaSquareFull } from "react-icons/fa6";
-import { FaCircle } from "react-icons/fa";
+// import { FaCircle } from "react-icons/fa";
 
 export default function AddShapes() {
     const [showPopOver, setShowPOpOver] = useState(false)
