@@ -39,4 +39,9 @@ export const BoardOptionButton = styled.button`
         transition: opacity 150 ease-in;
         cursor: pointer;
     }
+
+    &:disabled {
+        cursor: not-allowed;
+        opacity: 0.5;
+    }
 `;

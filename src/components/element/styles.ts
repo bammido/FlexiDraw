@@ -24,3 +24,19 @@ export const Resizer = styled.div`
     bottom: -4px;
     cursor: se-resize;
 `
+
+export const Rotater = styled.div`
+    position: absolute;
+    border-radius: 100%;
+    background-color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    padding: 0.25rem;
+    width: 15px;
+    height: 15px;
+    bottom: calc(-15px - 1rem);
+    left: calc(50% - 8px - 0.5rem);
+    cursor: grabbing;
+`

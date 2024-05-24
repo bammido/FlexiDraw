@@ -2,6 +2,8 @@ import { SpringRef, SpringValue } from "@react-spring/web";
 import { ReactDOMAttributes } from "@use-gesture/react/dist/declarations/src/types";
 import { createContext, useContext, useMemo, useState } from "react"
 
+export type BorderStyle = "dashed" | "dotted" | "solid" | "double";
+
 interface ISize {
     width: number; 
     height: number;
@@ -14,6 +16,10 @@ export interface IElementConfigs {
     height: number;
     backgroundColor: string;
     borderColor: string;
+    borderWidth: number;
+    borderRadius: number;
+    borderStyle: BorderStyle;
+    rotation: number;
 }
 
 interface IUpdateConfigs {
@@ -23,6 +29,10 @@ interface IUpdateConfigs {
     height?: number;
     backgroundColor?: string;
     borderColor?: string;
+    borderWidth?: number;
+    borderRadius?: number;
+    borderStyle?: BorderStyle;
+    rotation?: number;
 }
 
 export type ElApi = SpringRef<IElementConfigs>
@@ -34,6 +44,10 @@ export interface IElConfigsSpring {
     height: SpringValue<number>;
     backgroundColor: SpringValue<string>;
     borderColor: SpringValue<string>;
+    borderWidth: SpringValue<number>;
+    borderRadius: SpringValue<number>;
+    borderStyle: SpringValue<BorderStyle>;
+    rotation: SpringValue<number>;
 }
 
 export interface IElProps extends IElConfigsSpring {
@@ -64,6 +78,9 @@ interface IBoardContext {
     selectedElementConfigs: IElementConfigs | undefined;
     updateElement: (id: string, updatedConfigs: IUpdateConfigs) => void
     selectedElement: string;
+    deleteSelectedElement: () => void;
+    boardOptionsRef: React.MutableRefObject<HTMLDivElement | null>;
+    setBoardOptionsRef: React.Dispatch<React.MutableRefObject<HTMLDivElement | null>>
 }
 
 const boardContext = createContext<IBoardContext | null>(null)
@@ -72,6 +89,7 @@ export function BoardContextProvider({ children } : { children: React.ReactNode 
     const [size, setSize] = useState<ISize>({width: 0, height: 0})
     const [elementsOnBoard, setElementsOnBoard] = useState<IElementOnboard[]>([])
     const [selectedElement, setSelectedElement] = useState("")
+    const [boardOptionsRef, setBoardOptionsRef] = useState<React.MutableRefObject<HTMLDivElement | null>>({current: null})
 
     function addElement(el: IElementOnboard) {
         setElementsOnBoard(prev => [...prev, el])
@@ -92,11 +110,29 @@ export function BoardContextProvider({ children } : { children: React.ReactNode 
     function updateElement(id: string, updatedConfigs: IUpdateConfigs) {
         setElementsOnBoard(prev =>  prev.map((el) => (el.id === id ? { ...el, ...updatedConfigs } : el))) 
     }
+    
+    const selectedElementConfigs = useMemo(() => elementsOnBoard.find(el => el.id === selectedElement), [selectedElement, elementsOnBoard])
 
-    const selectedElementConfigs = useMemo(() => elementsOnBoard.find(el => el.id === selectedElement), [selectElement, elementsOnBoard])
+    function deleteSelectedElement() {
+        const elementId = selectedElement;
+        unselectElement(selectedElement)
+        setElementsOnBoard(prev =>  prev.filter((el) => (el.id !== elementId)))
+    }
+
 
     return <boardContext.Provider value={{ 
-        size, setSize, elementsOnBoard, setElementsOnBoard, addElement, resetBoard, selectedElement, selectElement, unselectElement, selectedElementConfigs, updateElement }}>
+        size, 
+        setSize, 
+        elementsOnBoard,
+        setElementsOnBoard, 
+        addElement, 
+        resetBoard, 
+        selectedElement, 
+        selectElement, 
+        unselectElement, 
+        selectedElementConfigs, 
+        updateElement, 
+        deleteSelectedElement, boardOptionsRef, setBoardOptionsRef }}>
         {children}
     </boardContext.Provider>
 }

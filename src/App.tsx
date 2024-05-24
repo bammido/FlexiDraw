@@ -15,7 +15,7 @@ function App() {
           <div style={{display: "flex", flexDirection: "column", flexGrow: 1}}>
             <BoardOptions />
             
-            <div ref={boardRef} style={{display: 'flex', flexGrow: 1, padding: '2rem', paddingLeft: 0, gap:'2rem' }}>
+            <div ref={boardRef} style={{display: 'flex', flexGrow: 1 }}>
                 <ElementOptions />
                 <Board boardRef={boardRef} />
             </div>

@@ -30,20 +30,26 @@ export default function useResize({
     const { resize } = useSetElApi({ elApi, resizerApi, elConfigsSpring, resizerConfigsSpring })
 
     return useDrag(({ offset , event}) => {
-        if (resizing && event.target === resizerRef?.current) {
+        if (resizing && event.target === resizerRef?.current) {          
           const scale = ((resinzingScale - 1) - 1) * -1
-            const newWidth = offset[0] * scale ;
-            const newHeight = offset[1] * scale ;
+          const newWidth = offset[0] * scale ;
+          const newHeight = offset[1] * scale ;
 
-            const newElConfigs = { width: newWidth, height: newHeight, 
-              x: resizerConfigsSpring.resizerX.get() + (offset[0] - newWidth) /2, 
-              y: resizerConfigsSpring.resizerY.get() + (offset[1] - newHeight) /2}
+          const resizerCenterX = resizerConfigsSpring.resizerX.get() + offset[0] / 2;
+          const resizerCenterY = resizerConfigsSpring.resizerY.get() + offset[1] / 2;
 
-            const newResizeConfigs = { resizerWidth: offset[0], resizerHeight: offset[1] }
-            
-            resize(newElConfigs, newResizeConfigs)
-            updateElement(id, { width: newWidth, height: newHeight, 
-              x: resizerConfigsSpring.resizerX.get() + (offset[0] - newWidth) /2, y: resizerConfigsSpring.resizerY.get() + (offset[1] - newHeight) /2})
+          const newElemntX = resizerCenterX - (newWidth + elConfigsSpring.borderWidth.get() * 2) / 2
+          const newElemntY = resizerCenterY - (newHeight + elConfigsSpring.borderWidth.get() * 2) / 2
+
+          const newElConfigs = { width: newWidth, height: newHeight, 
+            x: newElemntX,
+            y: newElemntY
+          }
+
+          const newResizeConfigs = { resizerWidth: offset[0], resizerHeight: offset[1] }
+          
+          resize(newElConfigs, newResizeConfigs)
+          updateElement(id, newElConfigs)
         }
       }, {
         bounds: {

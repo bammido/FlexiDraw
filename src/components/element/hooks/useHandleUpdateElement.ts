@@ -16,7 +16,17 @@ interface IUseHandleUpdateElementProps {
 export default function useHandleUpdateElement({elApi, elConfigsSpring, resizerApi, resizerConfigsSpring, id} : IUseHandleUpdateElementProps) {
     const {selectedElement, selectedElementConfigs} = useBoardContext()
 
-    const { move, resize, changeBackgorundColor } = useSetElApi({elApi, resizerApi, elConfigsSpring, resizerConfigsSpring})
+    const { 
+        move, 
+        resize, 
+        changeBackgorundColor, 
+        changeBorderColor, 
+        changeBorderWidth, 
+        changeBorderRadius,
+        changeBorderStyle,
+        changeRotation
+    } = useSetElApi({elApi, resizerApi, elConfigsSpring, resizerConfigsSpring})
+
     const { resinzingScale } = useElementsConfigsContext()
 
     useEffect(() => {
@@ -35,17 +45,42 @@ export default function useHandleUpdateElement({elApi, elConfigsSpring, resizerA
             if(selectedElementConfigs.width.toFixed(2) !== elConfigsSpring.width.get().toFixed(2) ||
                 selectedElementConfigs.height.toFixed(2) !== elConfigsSpring.height.get().toFixed(2)) {
                 
+                const newResizerWidth = (selectedElementConfigs.width + selectedElementConfigs.borderWidth * 2) * resinzingScale;
+                const newResizerHeight = (selectedElementConfigs.height + selectedElementConfigs.borderWidth * 2) * resinzingScale;
+                
                 const newElSize = { width: selectedElementConfigs.width, height: selectedElementConfigs.height}
-                const newResizerSize = { 
-                    resizerWidth: selectedElementConfigs.width * resinzingScale,
-                    resizerHeight: selectedElementConfigs.height * resinzingScale
+                const newResizerConfigs = { 
+                    resizerWidth: newResizerWidth,
+                    resizerHeight: newResizerHeight,
+                    resizerX: elConfigsSpring.x.get() - (newResizerWidth - newElSize.width) / 2,
+                    resizerY: elConfigsSpring.y.get() - (newResizerHeight - newElSize.height) / 2
                 }
                 
-                resize(newElSize, newResizerSize)
+                resize(newElSize, newResizerConfigs)
             }
 
             if(selectedElementConfigs.backgroundColor !== elConfigsSpring.backgroundColor.get()) {
                 changeBackgorundColor(selectedElementConfigs.backgroundColor)
+            }
+
+            if(selectedElementConfigs.borderColor !== elConfigsSpring.borderColor.get()) {
+                changeBorderColor(selectedElementConfigs.borderColor)
+            }
+
+            if(selectedElementConfigs.borderWidth !== elConfigsSpring.borderWidth.get()) {
+                changeBorderWidth(selectedElementConfigs.borderWidth)
+            }
+
+            if(selectedElementConfigs.borderRadius !== elConfigsSpring.borderRadius.get()) {
+                changeBorderRadius(selectedElementConfigs.borderRadius)
+            }
+            
+            if(selectedElementConfigs.borderStyle !== elConfigsSpring.borderStyle.get()) {
+                changeBorderStyle(selectedElementConfigs.borderStyle)
+            }
+            
+            if(selectedElementConfigs.rotation !== elConfigsSpring.rotation.get()) {
+                changeRotation(selectedElementConfigs.rotation)
             }
         }
     }, [selectedElementConfigs])

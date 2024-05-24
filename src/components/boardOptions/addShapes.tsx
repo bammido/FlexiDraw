@@ -23,8 +23,12 @@ export default function AddShapes() {
         y: 0,
         width: 50,
         height: 50,
-        backgroundColor: 'blue',
-        borderColor: 'black',
+        backgroundColor: 'black',
+        borderColor: 'blue',
+        borderWidth: 0,
+        borderRadius: 0,
+        borderStyle: "solid",
+        rotation: 0,
         El: Square
       }
       addElement(newSquare)
@@ -35,12 +39,12 @@ export default function AddShapes() {
     useOutsideClick({ref: popupRef, callback: () => setShowPOpOver(false)})
 
     return <AddShapesContainer ref={popupRef} >
-        <BoardOptionButton onClick={() => setShowPOpOver(prev => !prev)}> <FaShapes /> shapes </BoardOptionButton>
+        <BoardOptionButton onClick={() => setShowPOpOver(prev => !prev)}> <FaShapes /> formas </BoardOptionButton>
         <PopOver show={showPopOver} height={300} >
             <AddShapesPopOver>
                 <FaSquareFull onClick={addSquare} title="quadrado" />
-                <FaCircle title="circulo" />
-                <IoTriangle title="triângulo" />
+                {/* <FaCircle title="circulo" /> */}
+                {/* <IoTriangle title="triângulo" /> */}
             </AddShapesPopOver>
         </PopOver>
     </AddShapesContainer>
