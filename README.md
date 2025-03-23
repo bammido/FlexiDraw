@@ -12,6 +12,19 @@
 
 O Flexidraw é um aplicativo de quadro branco digital desenvolvido com React + Vite, permitindo a criação, manipulação e personalização de formas de maneira intuitiva. Utilizando a biblioteca use-gesture, o app possibilita interações fluidas, como redimensionamento, movimentação e estilização de elementos.
 
+## ⚙️Como Rodar:
+
+1. clone o repositório  
+→ ``` git clone https://github.com/bammido/FlexiDraw.git ```
+
+2. instale as dependências  
+→ ``` npm i ```
+
+3. rode o projeto  
+→ ``` npm run dev ```
+
+* Vai iniciar em http://localhost:5173/
+
 ## ✨Recursos  
 ✔️ Adicione formas geométricas ao quadro branco  
 ✔️ Redimensione e mova os elementos livremente  
