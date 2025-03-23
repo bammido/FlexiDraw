@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useBoardContext } from "../../context/BoardContext";
-import { BoardDiv } from "./styles";
+import { BoardDiv, BoardSection } from "./styles";
 import BoardElement from "../element";
 
 export default function Board({boardRef}: {boardRef: React.MutableRefObject<null | HTMLDivElement>}) {
@@ -10,9 +10,9 @@ export default function Board({boardRef}: {boardRef: React.MutableRefObject<null
     boardRef.current && setSize({width: boardRef.current.clientWidth, height: boardRef.current.clientHeight})
   }, [boardRef])
 
-  return <div style={{ padding: "2rem", flexGrow: 1, display: 'flex'}}>
+  return <BoardSection>
     <BoardDiv>
       {elementsOnBoard.map(el => <BoardElement {...el} key={el.id} />)}
     </BoardDiv>
-  </div>
+  </BoardSection>
 }

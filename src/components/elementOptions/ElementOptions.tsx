@@ -125,7 +125,7 @@ export default function ElementOptions(){
                     <h2>Estilo</h2>
                     <ElementConfigSection>
                         <ElementConfig>
-                            <label htmlFor="backgroundColor">Cor</label>
+                            <label htmlFor="backgroundColor">Cor (hex ou css colors)</label>
                             <ElementsConfigsInput 
                                 name="backgroundColor"
                                 id="backgroundColor"
@@ -134,7 +134,7 @@ export default function ElementOptions(){
                             />
                         </ElementConfig>
                         <ElementConfig>
-                            <label htmlFor="borderColor">Cor da borda</label>
+                            <label htmlFor="borderColor">Cor da borda (hex ou css colors)</label>
                             <ElementsConfigsInput 
                                 name="borderColor"
                                 id="borderColor"

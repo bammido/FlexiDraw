@@ -7,3 +7,9 @@ export const BoardDiv = styled.div`
     overflow: hidden;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 `
+
+export const BoardSection = styled.div`
+    padding: 2rem; 
+    flex-grow: 1; 
+    display: flex;
+`;
