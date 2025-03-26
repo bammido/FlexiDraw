@@ -1,11 +1,13 @@
 # 🎨FlexiDraw
 
 <div align="center">
-  <img src="./public/FlexiDraw-logo.png">
+  <img src="https://raw.githubusercontent.com/bammido/flexidraw/main/public/FlexiDraw-logo.png">
 
-  <img src="https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB">
-  <img src="https://img.shields.io/badge/Vite-B73BFE?style=for-the-badge&logo=vite&logoColor=FFD62E">
-  <img src="https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white">
+ <div data-badges>
+    <img src="https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB">
+    <img src="https://img.shields.io/badge/Vite-B73BFE?style=for-the-badge&logo=vite&logoColor=FFD62E">
+    <img src="https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white">
+ </div>
 </div>
 
 ## [De uma olhada](https://flexi-draw.vercel.app/)
